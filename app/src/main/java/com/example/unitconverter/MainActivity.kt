@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
@@ -45,7 +47,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    UnitCoverter()
+                    UnitConverter()
                 }
             }
         }
@@ -53,69 +55,83 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun UnitCoverter(){
+fun UnitConverter(){
     Column (
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 50.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-
-
     ){
-        // All the UI element will be placed vertically
-        Text("Unit Converter")
+        Text(text = "Unit Converter")
         Spacer(modifier = Modifier.height(16.dp))
+        OutlinedTextField(value = "Enter Value", onValueChange = {
 
-        OutlinedTextField(value = "", onValueChange = {
-            // What should happen when value is changed
         })
-
         Spacer(modifier = Modifier.height(16.dp))
-
-
         Row {
-            // All the UI element will be placed horizontally
-
-            Box {
-                Button(onClick = { /*TODO*/ }) {
-                    Text(text = "Select")
-                    Icon(Icons.Default.ArrowDropDown, contentDescription = "Arrow Sown")
-
+            Box{
+                // A Box is a composable that allows you to stack composables on top of each other.
+                // It is similar to a FrameLayout in Android View system.
+                // similar to XML's layout_gravity
+                Button(onClick = { }) {
+                    Text(text = "From")
+                    Icon(Icons.Default.ArrowDropDown, contentDescription = "Arrow Down")
                 }
-                DropdownMenu(expanded = false, onDismissRequest = { /*TODO*/ }) {
-                    DropdownMenuItem(text = { Text(text = "Centimeters") }, onClick = { /*TODO*/ })
-                    DropdownMenuItem(text = { Text(text = "Meters")}, onClick = { /*TODO*/ })
-                    DropdownMenuItem(text = { Text(text = "Feet") }, onClick = { /*TODO*/ })
-                    DropdownMenuItem(text = { Text(text = "Millimeters") }, onClick = { /*TODO*/ })
+                DropdownMenu(expanded = true, onDismissRequest = { /*TODO*/ }) {
+                    DropdownMenuItem(
+                        text = { Text(text = "Centimeters") },
+                        onClick = { /*TODO*/ }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = "Meters") },
+                        onClick = { /*TODO*/ }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = "Feet") },
+                        onClick = { /*TODO*/ }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = "Millimeters") },
+                        onClick = { /*TODO*/ }
+                    )
                 }
             }
-            Spacer(modifier = Modifier.width(26.dp))
-
-            Box {
-                Button(onClick = { /*TODO*/ }) {
-                    Text(text = "Select")
-                    Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = "Arrow Down" )
-
+            Spacer(modifier = Modifier.width(16.dp))
+            Box{
+                Button(onClick = { }) {
+                    Text(text = "To")
+                    Icon(Icons.Default.ArrowDropDown, contentDescription = "Arrow Down")
                 }
-                DropdownMenu(expanded = false, onDismissRequest = { /*TODO*/ }) {
-                    DropdownMenuItem(text = { Text(text = "Centimeters") }, onClick = { /*TODO*/ })
-                    DropdownMenuItem(text = { Text(text = "Meters")}, onClick = { /*TODO*/ })
-                    DropdownMenuItem(text = { Text(text = "Feet") }, onClick = { /*TODO*/ })
-                    DropdownMenuItem(text = { Text(text = "Millimeters") }, onClick = { /*TODO*/ })
+                DropdownMenu(expanded = true, onDismissRequest = { /*TODO*/ }) {
+                    DropdownMenuItem(
+                        text = { Text(text = "Centimeters") },
+                        onClick = { /*TODO*/ }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = "Meters") },
+                        onClick = { /*TODO*/ }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = "Feet") },
+                        onClick = { /*TODO*/ }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = "Millimeters") },
+                        onClick = { /*TODO*/ }
+                    )
                 }
             }
 
 
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Text("Result:")
     }
+
 }
-
-
-
-
 @Preview(showBackground = true)
 @Composable
-fun UnitConverterPreview(){
-    UnitCoverter()
+fun UnitConverterPreview() {
+    UnitConverter()
 }
