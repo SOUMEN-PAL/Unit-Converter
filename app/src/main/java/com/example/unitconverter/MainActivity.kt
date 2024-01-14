@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,25 +14,43 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.unitconverter.ui.theme.UnitConverterTheme
 import kotlin.math.roundToInt
 
@@ -52,20 +71,35 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UnitConverter(){
 // states //
-    var inputValue = remember { mutableStateOf("") }
-    var outputValue = remember { mutableStateOf("0")}
+    val inputValue = remember { mutableStateOf("") }
+    val outputValue = remember { mutableStateOf("0")}
 
-    var inputUnit = remember { mutableStateOf("From") }
-    var outputUnit = remember { mutableStateOf("To") }
-    var resultUnit = remember { mutableStateOf("") }
-    var iExpanded = remember { mutableStateOf(false) }
-    var oExpanded = remember { mutableStateOf(false) }
+    val inputUnit = remember { mutableStateOf("From") }
+    val outputUnit = remember { mutableStateOf("To") }
+    val resultUnit = remember { mutableStateOf("") }
+    val iExpanded = remember { mutableStateOf(false) }
+    val oExpanded = remember { mutableStateOf(false) }
 
     val iConversionFactor = remember { mutableDoubleStateOf(1.00) }
     val oConversionFactor = remember { mutableDoubleStateOf(1.00) }
+
+
+
+    // Fonts //
+    val fontFamily = FontFamily(
+        Font(R.font.lexend_thin, FontWeight.Thin),
+        Font(R.font.lexend_light, FontWeight.Light),
+        Font(R.font.lexend_regular, FontWeight.Normal),
+        Font(R.font.lexend_medium, FontWeight.Medium),
+        Font(R.font.lexend_semibold, FontWeight.SemiBold),
+        Font(R.font.lexend_bold, FontWeight.Bold),
+        Font(R.font.lexend_extrabold, FontWeight.ExtraBold),
+        Font(R.font.lexend_extralight, FontWeight.ExtraLight)
+    )
 
     // functions //
     val context = LocalContext.current
@@ -93,17 +127,62 @@ fun UnitConverter(){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        Text(text = "Unit Converter")
+        Text(
+            text = buildAnnotatedString {
+
+                withStyle(
+                    style = SpanStyle(
+                        color = Color.Green,
+                        fontSize = 50.sp,
+                    )
+                ){
+                    append("U")
+                }
+                append("nit ")
+               withStyle(
+                   style = SpanStyle(
+                       color = Color.Green,
+                       fontSize = 50.sp,
+                   )
+               ){
+                   append("C")
+               }
+                append("onverter")
+
+            },
+
+            style = MaterialTheme.typography.headlineLarge,
+            fontFamily = fontFamily,
+            textAlign = TextAlign.Center
+
+
+            )
+
+
+
         Spacer(modifier = Modifier.height(16.dp))
 
         // Input Box //
         OutlinedTextField(
-            value = inputValue.value , onValueChange = {
+
+            value = inputValue.value ,
+            onValueChange = {
                 inputValue.value = it
                 inputUnit.value = "From"
                 outputUnit.value = "To"
-        },
-            label = { Text(text = "Enter Value")}
+            },
+            label = { Text(text = "Enter Value" , fontFamily = fontFamily , color = Color.Black) },
+            shape = RoundedCornerShape(5.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+                disabledContainerColor = Color.White,
+                cursorColor = Color.Black,
+                focusedBorderColor = Color.Green,
+                unfocusedBorderColor = Color.Black,
+                disabledBorderColor = Color.Black,
+            )
+
 
         )
 
@@ -113,14 +192,23 @@ fun UnitConverter(){
         Row {
             // Input BOx //
             Box{
-                // A Box is a composable that allows you to stack composables on top of each other.
+                // A Box is a composable that allows you to stack composable on top of each other.
                 // It is similar to a FrameLayout in Android View system.
-                // similar to XML's layout_gravity
+                // similar to XAML's layout_gravity
 
                 // Input button //
-                Button(onClick = { iExpanded.value = true }) {
-                    Text(text = inputUnit.value)
+                Button(
+                    onClick = { iExpanded.value = true },
+                    shape = RoundedCornerShape(5.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Green,
+                        contentColor = Color.Black
+                    ),
+
+                ) {
+                    Text(text = inputUnit.value, fontFamily = fontFamily)
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "Arrow Down")
+
                 }
 
 
@@ -170,8 +258,14 @@ fun UnitConverter(){
                 // val context = LocalContext.current
 
                 // Output button //
-                Button(onClick = { oExpanded.value = true }) {
-                    Text(text = outputUnit.value)
+                Button(onClick = { oExpanded.value = true },
+                    shape = RoundedCornerShape(5.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Green,
+                        contentColor = Color.Black
+                    )
+                ) {
+                    Text(text = outputUnit.value , fontFamily = fontFamily)
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "Arrow Down")
                 }
 
@@ -220,7 +314,11 @@ fun UnitConverter(){
 
         }
         Spacer(modifier = Modifier.height(8.dp))
-        Text("Result: ${outputValue.value} ${resultUnit.value}")
+
+        // Convert Button //
+        Text("Result: ${outputValue.value} ${resultUnit.value}",
+            style = MaterialTheme.typography.headlineMedium,
+        )
     }
 
 }
