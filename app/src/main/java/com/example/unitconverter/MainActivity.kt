@@ -30,6 +30,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -56,6 +59,19 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun UnitConverter(){
+// states //
+    var inputValue = remember { mutableStateOf("") }
+    var resultValue = remember { mutableStateOf("")}
+
+    var inputUnit = remember { mutableStateOf("Centimeters") }
+    var outputUnit = remember { mutableStateOf("Meters") }
+
+    var iExpanded = remember { mutableStateOf(false) }
+    var oExpanded = remember { mutableStateOf(false) }
+
+    val conversionFactor = remember { mutableDoubleStateOf(0.01) }
+
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -65,9 +81,14 @@ fun UnitConverter(){
     ){
         Text(text = "Unit Converter")
         Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(value = "Enter Value", onValueChange = {
+        OutlinedTextField(
+            value = inputValue.value , onValueChange = {
+            inputValue.value = it
 
-        })
+        },
+            label = { Text(text = "Enter Value")}
+
+        )
         Spacer(modifier = Modifier.height(16.dp))
         Row {
             Box{
@@ -78,7 +99,7 @@ fun UnitConverter(){
                     Text(text = "From")
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "Arrow Down")
                 }
-                DropdownMenu(expanded = true, onDismissRequest = { /*TODO*/ }) {
+                DropdownMenu(expanded = false, onDismissRequest = { /*TODO*/ }) {
                     DropdownMenuItem(
                         text = { Text(text = "Centimeters") },
                         onClick = { /*TODO*/ }
@@ -99,11 +120,12 @@ fun UnitConverter(){
             }
             Spacer(modifier = Modifier.width(16.dp))
             Box{
+                // val context = LocalContext.current
                 Button(onClick = { }) {
                     Text(text = "To")
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "Arrow Down")
                 }
-                DropdownMenu(expanded = true, onDismissRequest = { /*TODO*/ }) {
+                DropdownMenu(expanded = false, onDismissRequest = { /*TODO*/ }) {
                     DropdownMenuItem(
                         text = { Text(text = "Centimeters") },
                         onClick = { /*TODO*/ }
