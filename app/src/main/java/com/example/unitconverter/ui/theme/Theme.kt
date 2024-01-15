@@ -25,7 +25,7 @@ private val DarkColorScheme = darkColorScheme(
 private val LightColorScheme = lightColorScheme(
     primary = Purple40,
     secondary = PurpleGrey40,
-    tertiary = Pink40
+    tertiary = Pink40,
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -62,8 +62,8 @@ fun UnitConverterTheme(
                 window.statusBarColor = Color.Green.toArgb()
                 window.navigationBarColor = Color.Green.toArgb()
             } else {
-                window.statusBarColor = Color.White.toArgb()
-                window.navigationBarColor = Color.White.toArgb()
+                window.statusBarColor = Color.Black.toArgb()
+                window.navigationBarColor = Color.Black.toArgb()
             }
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }

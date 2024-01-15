@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -171,20 +172,19 @@ fun UnitConverter(){
                 inputUnit.value = "From"
                 outputUnit.value = "To"
             },
-            label = { Text(text = "Enter Value" , fontFamily = fontFamily , color = Color.Black) },
+            label = { Text(text = "Enter Value" , fontFamily = fontFamily) },
             shape = RoundedCornerShape(5.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                disabledContainerColor = Color.White,
-                cursorColor = Color.Black,
-                focusedBorderColor = Color.Green,
-                unfocusedBorderColor = Color.Black,
-                disabledBorderColor = Color.Black,
+
+                focusedBorderColor = Color.White,
+                unfocusedBorderColor = Color.Green,
+                cursorColor = Color.Green,
+                focusedLabelColor = Color.Green,
+            ),
             )
 
 
-        )
+
 
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -317,7 +317,7 @@ fun UnitConverter(){
 
         // Convert Button //
         Text("Result: ${outputValue.value} ${resultUnit.value}",
-            style = MaterialTheme.typography.headlineMedium,
+            fontSize = 20.sp,
         )
     }
 
